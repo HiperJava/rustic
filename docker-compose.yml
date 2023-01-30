@@ -1,0 +1,14 @@
+version: "3.3"
+services:
+  psql:
+    image: postgres:15.1
+    container_name: rust-psql
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: rust
+      POSTGRES_PASSWORD: rust
+      POSTGRES_DB: rust
+    volumes:
+      - ./data:/var/lib/postgresql
+
