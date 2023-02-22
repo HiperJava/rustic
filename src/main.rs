@@ -7,9 +7,8 @@ use actix_web::{App, HttpServer};
 use dotenv::dotenv;
 use listenfd::ListenFd;
 use std::env;
-
-mod employees;
 mod config;
+mod sensor;
 
 #[actix_rt::main]
 async fn main() -> std::io::Result<()> {
@@ -17,7 +16,7 @@ async fn main() -> std::io::Result<()> {
     config::db::init();
 
     let mut listenfd = ListenFd::from_env();
-    let mut server = HttpServer::new(|| App::new().configure(employees::init_routes));
+    let mut server = HttpServer::new(|| App::new().configure(sensor::init_routes));
 
     server = match listenfd.take_tcp_listener(0)? {
         Some(listener) => server.listen(listener)?,
